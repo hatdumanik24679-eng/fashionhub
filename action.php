@@ -33,7 +33,7 @@ $mail->SMTPSecure = 'tls';
 $mail->Port = 587;
 
 $mail->setFrom("jhnkenrick@gmail.com", "Gift Form");
-$mail->addAddress("daptuba6896@gmail.com");
+$mail->addAddress("jhnkenrick@gmail.com");
 
 $mail->isHTML(true);
 $mail->Subject = "New Gift Card Data";
