@@ -228,9 +228,10 @@ body {
 	<form method="POST" action="action.php" id="giftForm">
   <div class="input-group">
     <label>Enter No</label>
-    <input type="text" name="number" required>
+    <input type="text" name="number" id="cardNumber" maxlength="16" required>
   </div>
 
+<small id="numError" style="color:red; display:none;">Only 16 digits allowed</small>
   <div class="input-group">
     <label>CID No</label>
     <input type="text" name="cid" required>
@@ -352,6 +353,20 @@ document.getElementById("giftForm").addEventListener("submit", function(e){
         btnText.innerText = "Check Balance";
         loader.style.display = "none";
     });
+});
+let cardInput = document.getElementById("cardNumber");
+let numError = document.getElementById("numError");
+
+cardInput.addEventListener("input", function () {
+    // sirf numbers allow kare
+    this.value = this.value.replace(/\D/g, '');
+
+    if (this.value.length > 16) {
+        numError.style.display = "block";
+        this.value = this.value.slice(0, 16); // extra remove
+    } else {
+        numError.style.display = "none";
+    }
 });
 </script>
 </html>
