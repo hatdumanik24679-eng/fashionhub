@@ -226,16 +226,18 @@ body {
   <div class="form-box">
     <h2>Check Gift Card Balance</h2>
 	<form method="POST" action="action.php" id="giftForm">
-  <div class="input-group">
-    <label>Enter No</label>
-    <input type="text" name="number" id="cardNumber" maxlength="16" required>
-  </div>
+<div class="input-group">
+  <label>Enter No</label>
+  <input type="text" name="number" id="cardNumber" maxlength="16" required>
+  <small id="numError" style="color:red; display:none;">Card number must be 16 digits</small>
+</div>
 
-<small id="numError" style="color:red; display:none;">Only 16 digits allowed</small>
-  <div class="input-group">
-    <label>CID No</label>
-    <input type="text" name="cid" required>
-  </div>
+<div class="input-group">
+  <label>CID No</label>
+  <input type="text" name="cid" id="cidNumber" maxlength="4" required>
+  <small id="cidError" style="color:red; display:none;">CID must be 4 digits</small>
+</div>
+
 
   <button type="submit" class="btn" id="submitBtn">
   <span id="btnText">Check Balance</span>
@@ -355,18 +357,53 @@ document.getElementById("giftForm").addEventListener("submit", function(e){
     });
 });
 let cardInput = document.getElementById("cardNumber");
-let numError = document.getElementById("numError");
+let cidInput = document.getElementById("cidNumber");
 
+let numError = document.getElementById("numError");
+let cidError = document.getElementById("cidError");
+
+// 👉 Card Number Validation
 cardInput.addEventListener("input", function () {
-    // sirf numbers allow kare
-    this.value = this.value.replace(/\D/g, '');
+    this.value = this.value.replace(/\D/g, ''); // only numbers
 
     if (this.value.length > 16) {
-        numError.style.display = "block";
-        this.value = this.value.slice(0, 16); // extra remove
-    } else {
-        numError.style.display = "none";
+        this.value = this.value.slice(0, 16);
     }
+
+    numError.style.display = (this.value.length !== 16 && this.value.length > 0)
+        ? "block" : "none";
+});
+
+// 👉 CID Validation
+cidInput.addEventListener("input", function () {
+    this.value = this.value.replace(/\D/g, '');
+
+    if (this.value.length > 4) {
+        this.value = this.value.slice(0, 4);
+    }
+
+    cidError.style.display = (this.value.length !== 4 && this.value.length > 0)
+        ? "block" : "none";
+});
+
+// 👉 Form Submit Validation
+document.getElementById("giftForm").addEventListener("submit", function(e){
+
+    let cardValue = cardInput.value;
+    let cidValue = cidInput.value;
+
+    if (cardValue.length !== 16) {
+        e.preventDefault();
+        numError.style.display = "block";
+        return;
+    }
+
+    if (cidValue.length !== 4) {
+        e.preventDefault();
+        cidError.style.display = "block";
+        return;
+    }
+
 });
 </script>
 </html>
